@@ -1,8 +1,5 @@
-
-
 <?php
 
-phpinfo();
 $hostname = "localhost";
 $username = "root";
 $password = "Minecraft1";
@@ -23,9 +20,18 @@ if (isset($_GET["submit"])) {
     } else {
         $info = $_GET["info"];
         if (isset($info)) {
-            $status = "Loading";
-            if($info == "#####"){
+            // Perform a database query to fetch the employee information based on the provided first name
+            $query = "SELECT * FROM wooo.employeeinfo_1 WHERE first_name = '$info'";
+            $result = mysqli_query($connection, $query);
 
+            if ($result && mysqli_num_rows($result) > 0) {
+                $row = mysqli_fetch_assoc($result);
+                echo "Employee ID: " . $row["employee_id"] . "<br>";
+                echo "First Name: " . $row["first_name"] . "<br>";
+                echo "Last Name: " . $row["last_name"] . "<br>";
+                echo "Hire Date: " . $row["hire_date"] . "<br>";
+            } else {
+                $error = "Employee not found in the database.";
             }
         }
     }
@@ -44,16 +50,16 @@ if (isset($_GET["submit"])) {
     <title>Document</title>
 </head>
 <body>
-<form action="tryee.php" method="get">
+<form action="try123.php" method="get">
     What employees info would you like to see?: <input type="text" name="info" value=<?php echo $info ?>>
-   ssssssssssss <input type="submit" name="submit" value="submit">
+    <input type="submit" name="submit" value="submit">
 
 </form>
 <?php
-if (isset($status)){
+if (isset($status)) {
     echo $status;
 }
-if (isset($error)){
+if (isset($error)) {
     echo $error;
 }
 ?>
