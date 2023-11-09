@@ -6,7 +6,7 @@ $username = "root";
 $password = "Minecraft1";
 $database = "wooo";
 
-$connection = \mysqli_connect($hostname, $username, $password, $database);
+$connection = mysqli_connect($hostname, $username, $password, $database);
 
 if (!$connection) {
     die("Connection failed: " . mysqli_connect_error());
