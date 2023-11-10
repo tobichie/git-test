@@ -1,5 +1,17 @@
 <?php
 
+
+$hostname = "localhost";
+$username = "root";
+$password = "Minecraft1";
+$database = "tuts";
+
+$conn = mysqli_connect($hostname, $username, $password, $database);
+
+if (!$conn) {
+    echo "Connection error: " . mysqli_connect_error();
+}
+
 $email = $title = $ingredients = '';
 $errors = array('email' => '', 'title' => '', 'ingredients' => '');
 
@@ -38,8 +50,22 @@ if(isset($_POST['submit'])){
     if(array_filter($errors)){
         //echo 'errors in form';
     } else {
-        //echo 'form is valid';
-        header('Location: index.php');
+        // escape sql chars
+        $email = mysqli_real_escape_string($conn, $_POST['email']);
+        $title = mysqli_real_escape_string($conn, $_POST['title']);
+        $ingredients = mysqli_real_escape_string($conn, $_POST['ingredients']);
+
+        // create sql
+        $sql = "INSERT INTO pizzas(title,email,ingredients) VALUES('$title','$email','$ingredients')";
+
+        // save to db and check
+        if(mysqli_query($conn, $sql)){
+            // success
+            header('Location: index.php');
+        } else {
+            echo 'query error: '. mysqli_error($conn);
+        }
+
     }
 
 } // end POST check
@@ -49,7 +75,7 @@ if(isset($_POST['submit'])){
 <!DOCTYPE html>
 <html>
 
-<?php include("header.php"); ?>
+<?php include('header.php'); ?>
 
 <section class="container grey-text">
     <h4 class="center">Add a Pizza</h4>
@@ -69,6 +95,6 @@ if(isset($_POST['submit'])){
     </form>
 </section>
 
-<?php include("footer.php"); ?>
+<?php include('footer.php'); ?>
 
 </html>
