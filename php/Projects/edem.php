@@ -89,7 +89,7 @@ if (isset($_POST["submit"])) {
 ?>
 
 <?php
-$allFirstNames = "SELECT * FROM wooo.employeeinfo_1  ";
+$allFirstNames = "SELECT * FROM wooo.employeeinfo_1 ORDER BY first_name ASC";
 $queryResult = mysqli_query($connection, $allFirstNames);
 if($queryResult->num_rows > 0) {
     $row = $queryResult->fetch_assoc();
@@ -106,3 +106,6 @@ if($queryResult->num_rows > 0) {
 <button><a href="try123.php">Back home</a></button>
 </body>
 </html>
+<?php
+// Next make a login page and then make it possible to order by with a button
+?>

@@ -61,7 +61,7 @@
 
     <div>
         <?php
-        $allFirstNames = "SELECT * FROM wooo.employeeinfo_1  ";
+        $allFirstNames = "SELECT * FROM wooo.employeeinfo_1 ORDER BY first_name ASC";
         $queryResult = mysqli_query($connection, $allFirstNames);
         if($queryResult->num_rows > 0) {
             $row = $queryResult->fetch_assoc();
