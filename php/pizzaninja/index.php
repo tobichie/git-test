@@ -1,14 +1,6 @@
 <?php
-$hostname = "localhost";
-$username = "root";
-$password = "Minecraft1";
-$database = "tuts";
 
-$conn = mysqli_connect($hostname, $username, $password, $database);
-
-if (!$conn){
-    echo "Connection error: " . mysqli_connect_error();
-}
+include("config.php");
 
 // write query for all pizzas
 
@@ -22,6 +14,8 @@ $result = mysqli_query($conn, $sql); // starts query for the database connected 
 
 $pizzas = mysqli_fetch_all($result, MYSQLI_ASSOC); //MYSQLI_ASSOC means its passed back as an associative array
 
+// following 2 are not necessary
+
 // free result from memory
 
 mysqli_free_result($result);
@@ -29,6 +23,8 @@ mysqli_free_result($result);
 // close connection
 
 mysqli_close($conn);
+
+// explode(",", $pizzas[0]["ingredients"]);
 
 ?>
 
@@ -41,19 +37,25 @@ mysqli_close($conn);
 <div class="container">
     <div class="row">
 
-        <?php foreach($pizzas as $pizza){  ?>
+        <?php foreach($pizzas as $pizza):  ?>
             <div class="col s6 md3">
                 <div class="card z-depth-0">
                     <div class="card-content center">
-                        <h6><?php echo htmlspecialchars($pizza["title"])?></h6> <?php // never trust the user?>
-                        <div><?php echo htmlspecialchars($pizza["ingredients"]) ?></div>
+                        <h6><?php echo htmlspecialchars($pizza["title"]);?></h6> <?php // never trust the user?>
+                        <ul>
+                            <?php foreach(explode(",", $pizza["ingredients"]) as $ing){?>
+                                <li><?php echo htmlspecialchars($ing) ?></li>
+
+
+                            <?php }?>
+                        </ul>
                     </div>
                     <div class="class-action right-align">
                         <a href="#" class="brand-text">more info</a>
                     </div>
                 </div>
             </div>
-        <?php } ?>
+        <?php endforeach; ?>
 
 
     </div>
