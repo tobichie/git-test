@@ -69,7 +69,7 @@ if (isset($_POST["submit"])) {
                         $Leditee = $_POST["Leditee"];
                         $sql = "DELETE FROM employeeinfo_1 WHERE first_name = '$Feditee' AND last_name =  '$Leditee' "; // check if it deletes the right thing if theres a duplicate
                         if (mysqli_query($connection, $sql)) {
-                            echo "Success! Old info deleted. Overwritten";
+                            echo "Success! Old info deleted. Overwritten" . "<br>";
                         }
                     }
 

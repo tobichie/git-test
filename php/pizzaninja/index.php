@@ -53,7 +53,7 @@ mysqli_close($conn);
                         </ul>
                     </div>
                     <div class="card-action right-align">
-                        <a class="brand-text" href="details.php?id=<?php echo $pizza['id'] ?>">more info</a>
+                        <a class="brand-text" href="#">more info</a>
                     </div>
                 </div>
             </div>
