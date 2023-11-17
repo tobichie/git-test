@@ -41,6 +41,7 @@ if (isset($_POST["submit"])) {
                 echo '<script>window.open("../pizzaninja/index.php", "_blank");</script>';
             } else {
                 $cantlogin = "set";
+
             }
 
         }

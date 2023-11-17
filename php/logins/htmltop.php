@@ -30,7 +30,7 @@
                     <input name="username" value="<?php
                     if (isset($username)) {
                         echo htmlspecialchars($username);
-                    } else {echo "";}?> "type="text"/>
+                    } else?>"type="text"/>
                 </div>
             </div>
             <div class="row">
@@ -68,13 +68,14 @@
                         echo "<input type='submit' value='submit' name='submit' class='btn waves-effect waves-light center'/>";
                     }if (isset($inRegister)){
                         echo "<input type='submit' value='Register' name='register' class='btn waves-effect waves-light center'/>";
-                        if (isset($_POST["register"])){
-                            header("location: logins.php");
-                        }
                     }
                     // next if isset $_POST["register"] then take the password and username and insert them into the database
                     ?>
                 </div>
+                <?php if (isset($success)){ echo "<div class='center input-field col s12'> <button type='submit' name='great'><a href='logins.php'>Login</a></button> </div>";
+                if (isset($_POST["great"])){
+                    header("location: logins.php");
+                }} ?>
             </div>
             <div class="row">
                 <div class="col s12">
@@ -85,6 +86,10 @@
                         }?>
 
                 </div>
+                <div class='center input-field col s12'><?php if (isset($usernametaken)){
+                    echo "Username taken";
+                    }
+                    ?></div>
             </div>
         </form>
     </div>

@@ -19,14 +19,22 @@ if (isset($_POST['register'])) {
     } else {
         $password = htmlspecialchars($_POST["password"]);
         $username = htmlspecialchars($_POST["username"]);
+
+        // check if the username exists already
+        $checkName = "SELECT Username FROM admincheck WHERE Username = '$username'";
+        $checkNameResult = $conn->query($checkName);
+
         $sql = "INSERT INTO admincheck(Username,Password, Status) VALUES('$username','$password', 'regular')";
-// save to db and check
+        // save to db and check
         if (mysqli_query($conn, $sql)) {
             // success
-            echo "<button><a href='logins.php'>Login</a>";
+            $success = "yes";
+            echo "made it";
         } else {
             echo 'query error: ' . mysqli_error($conn);
         }
+
+
     }
 }
 require "htmltop.php";
