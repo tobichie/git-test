@@ -20,15 +20,17 @@
             echo "logins.php";
         } ?>" method="post">
             <h2 class="center"><?php if (isset($inRegister)){
-
-                }  ?>Login</h2>
+                echo "Register";
+                } else {
+                echo "Login";
+                } ?></h2>
             <div class="row">
                 <div class="input-field col s12">
                     <label for="username" ">Username</label>
                     <input name="username" value="<?php
                     if (isset($username)) {
                         echo htmlspecialchars($username);
-                    }?> "type="text"/>
+                    } else {echo "";}?> "type="text"/>
                 </div>
             </div>
             <div class="row">
@@ -66,6 +68,9 @@
                         echo "<input type='submit' value='submit' name='submit' class='btn waves-effect waves-light center'/>";
                     }if (isset($inRegister)){
                         echo "<input type='submit' value='Register' name='register' class='btn waves-effect waves-light center'/>";
+                        if (isset($_POST["register"])){
+                            header("location: logins.php");
+                        }
                     }
                     // next if isset $_POST["register"] then take the password and username and insert them into the database
                     ?>

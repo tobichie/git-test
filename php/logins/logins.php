@@ -1,7 +1,6 @@
 <?php
 
 
-
 // first connect and check connection
 
 
@@ -23,25 +22,33 @@ if (isset($_POST["submit"])) {
         $pregerr = "Password can only be letters and Numbers";
         // echo "<div name='error'>Password can only be letters and Numbers</div>";
     } else {
-        $password = htmlspecialchars($_POST["password"]);
-        $username = htmlspecialchars($_POST["username"]);
-
+        $password = $_POST["password"];
+        $username = $_POST["username"];
         // now check the id of the row that has that username and password
         // if it can't then offer to register
 
-        $sql = "SELECT ID FROM logincheck WHERE Username = '$username' AND Password = '$password'";
+        $sql = "SELECT ID FROM admincheck WHERE Username = '$username' AND Password = '$password'";
+        // next select the status
+        $statusSelect = "SELECT Status FROM admincheck WHERE Username = '$username' AND Password = '$password'";
+        $resultStatus = $conn->query($statusSelect);
         $result = $conn->query($sql);
-        if ($result->num_rows > 0) {
-            echo "Exists";
-            header("location: ../pizzaninja/index.php");
-        } else {
-            $error = "User doesn't exist";
-            // You can offer to register here if the user doesn't exist
+        $otherSQL = "SELECT ID FROM admincheck WHERE Username = '$username' AND Password = '$password'";
+        $otherResult = $conn ->query($otherSQL);
+        while ($row = $resultStatus->fetch_assoc()) {
+            if ($row["Status"] == "admin") {
+                echo '<script>window.open("../TableGerüst&Co/together.php", "_blank");</script>';
+            } elseif ($row["Status"] == "regular"){
+                echo '<script>window.open("../pizzaninja/index.php", "_blank");</script>';
+            } else {
+                $cantlogin = "set";
+            }
 
         }
+
     }
+
 }
-if (isset($_POST["register"])){
+if (isset($_POST["register"])) {
     header("location: registry.php");
 }
 require "htmltop.php";

@@ -6,7 +6,7 @@ $inRegister = "yes";
 $host = "localhost";
 $user = "root";
 $pass = "Minecraft1";
-$database = "logins";
+$database = "tabellen";
 $conn = mysqli_connect($host, $user, $pass, $database);
 if ($conn->connect_error) {
     die("Connection failed...");
@@ -19,6 +19,14 @@ if (isset($_POST['register'])) {
     } else {
         $password = htmlspecialchars($_POST["password"]);
         $username = htmlspecialchars($_POST["username"]);
+        $sql = "INSERT INTO admincheck(Username,Password, Status) VALUES('$username','$password', 'regular')";
+// save to db and check
+        if (mysqli_query($conn, $sql)) {
+            // success
+            echo "<button><a href='logins.php'>Login</a>";
+        } else {
+            echo 'query error: ' . mysqli_error($conn);
+        }
     }
 }
 require "htmltop.php";
