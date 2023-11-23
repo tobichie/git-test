@@ -15,11 +15,12 @@ if ($conn->connect_error) {
 
 
 if (isset($_POST["submit"])) {
+
     if (!preg_match('/^[a-zA-Z0-9\s]+$/', $_POST["username"])) {
-        $pregerr = "Password can only be letters and Numbers";
+        echo "<div class='container center red'> Username can only be letters and Numbers</div>";
         // echo "<div name='error'>Name can only be letters and Numbers</div>";
     } elseif (!preg_match('/^[a-zA-Z0-9\s]+$/', $_POST["password"])) {
-        $pregerr = "Password can only be letters and Numbers";
+        echo "<div class='container center red'> Password can only be letters and Numbers</div>";
         // echo "<div name='error'>Password can only be letters and Numbers</div>";
     } else {
         $password = $_POST["password"];
@@ -34,19 +35,22 @@ if (isset($_POST["submit"])) {
         $result = $conn->query($sql);
         $otherSQL = "SELECT ID FROM admincheck WHERE Username = '$username' AND Password = '$password'";
         $otherResult = $conn ->query($otherSQL);
-        while ($row = $resultStatus->fetch_assoc()) {
+        if ($row = $resultStatus->fetch_assoc()) {
             if ($row["Status"] == "admin") {
                 echo '<script>window.open("../TableGerüst&Co/together.php", "_blank");</script>';
-            } elseif ($row["Status"] == "regular"){
+            } if ($row["Status"] == "regular"){
                 echo '<script>window.open("../pizzaninja/index.php", "_blank");</script>';
             } else {
-                $cantlogin = "set";
+
 
             }
 
+        } else {
+            echo "<div class = 'center red container'>Unable to login, password or Username are incorrect</div>";
+            }
         }
 
-    }
+
 
 }
 if (isset($_POST["register"])) {
