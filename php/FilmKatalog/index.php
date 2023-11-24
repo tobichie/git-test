@@ -11,7 +11,21 @@
         table {
             background-color: grey;
             border: black;
+            margin: 10px;
             border-collapse: collapse;
+            border: 10px;
+        }
+
+        body {
+            background-color: #0a0734;
+        }
+
+        h1 {
+            color: whitesmoke;
+        }
+
+        div {
+            color: white;
         }
     </style>
 </head>
@@ -20,61 +34,187 @@
 
 
 <div class="container center input-field">
-    <style> input{
+    <style> input {
             width: 100px;
             border-collapse: collapse;
             border: 8px black;
             margin-outside: 5px;
         }</style>
-    <input type="search" name="search" class="search center">
+    <input type="search" name="search" class="search center" placeholder="Search">
 </div>
 <form action="index.php" method="post">
-<table class="container">
-    <tr>
-        <th>Categorie</th>
-        <th>Name</th>
-        <th>Ratings</th>
-    </tr>
-    <?php // making a connection to the database
-    $conn = mysqli_connect("localhost", "root", "Minecraft1", "movies");
-    if (!$conn){
-        echo "Error. Not connected to database";
+    <table class="container stripped">
+        <tr>
+            <th>Categorie</th>
+            <th>Name</th>
+            <th>Rating</th>
+            <?php
+            if (!isset($_POST["enablefilters"])) {
+                echo "<th><button class='blue waves-effect waves-light btn' name='enablefilters'>Filter by</button></th>";
+            } else {
+                echo "<th>
+                <button class='blue waves-effect waves-light btn' name='timeadded'>Time Added</button>
+                <button class='blue waves-effect waves-light btn' name='Rating'>Rating</button>
+                <button class='blue waves-effect waves-light btn' name='Length'>Length</button>
+                <button class='blue waves-effect waves-light btn' name='Category'>Category</button></th>";
+
+                // show them by time added
+
+
+            }
+            // dont forget to show every movie in the database that contains the word/s given through user input
+            ?>
+        </tr>
+        <?php
+
+        ?>
+        <?php // making a connection to the database
+        $conn = mysqli_connect("localhost", "root", "Minecraft1", "movies");
+        if (!$conn) {
+            echo "Error. Not connected to database";
+        }
+        ?>
+        <?php
+        // if filters arent set just show this, so if a certain filter wasnt pressed
+        // otherwise show the filtered version
+
+        if (!isset($_POST["enablefilters"])) {
+            if (!isset($_POST["timeadded"]) and !isset($_POST["Rating"]) and !isset($_POST["Length"])) {
+                $sql = "SELECT * FROM allmovies";
+                $result = $conn->query($sql);
+                if ($result->num_rows > 0) {
+                    while ($rows = $result->fetch_assoc()) {
+                        $category = $rows["Categorie"];
+                        $name = $rows["Name"];
+                        $rating = $rows["Rating"];
+                        ?>
+                        <tr>
+                            <td><a href="../TableGerüst&Co/together.php" rel="noopener noreferrer"
+                                   target="_blank"><?php echo $rows["Categorie"] ?></a></td>
+                            <td><?php echo $rows["Name"] ?></td>
+                            <td><?php echo $rows["Rating"] ?></td>
+                        </tr>
+                    <?php } // creating the rows for Every movies Categore etc.?
+                }
+            }
+        }
+        if (isset($_POST["enablefilters"])) {
+            if (!isset($_POST["timeadded"]) or !isset($_POST["Rating"]) or !isset($_POST["Length"])) {
+                $sql = "SELECT * FROM allmovies ORDER BY NAME ASC";
+                $result = $conn->query($sql);
+                if ($result->num_rows > 0) {
+                    while ($rows = $result->fetch_assoc()) {
+                        $category = $rows["Categorie"];
+                        $name = $rows["Name"];
+                        $rating = $rows["Rating"];
+                        ?>
+                        <tr>
+                            <td><a href="../TableGerüst&Co/together.php" rel="noopener noreferrer"
+                                   target="_blank"><?php echo $rows["Categorie"] ?></a></td>
+                            <td><?php echo $rows["Name"] ?></td>
+                            <td><?php echo $rows["Rating"] ?></td>
+                        </tr>
+
+
+                        <?php
+                    }
+                }
+            }
+        } if (isset($_POST["timeadded"])) {
+            // display by time added
+            $sql = "SELECT * FROM allmovies ORDER BY TIMESTAMP DESC";
+            $result = $conn->query($sql);
+            if ($result->num_rows > 0) {
+                while ($rows = $result->fetch_assoc()) {
+                    $category = $rows["Categorie"];
+                    $name = $rows["Name"];
+                    $rating = $rows["Rating"];
+                    ?>
+                    <tr>
+                        <td><a href="../TableGerüst&Co/together.php" rel="noopener noreferrer"
+                               target="_blank"><?php echo $rows["Categorie"] ?></a></td>
+                        <td><?php echo $rows["Name"] ?></td>
+                        <td><?php echo $rows["Rating"] ?></td>
+
+                        <td><strong><i><?php echo $rows["Timestamp"] ?></i></strong></td>
+                    </tr>
+                    <?php
+                }
+            }
+        }
+
+
+        if (isset($_POST["Rating"])) {
+            $sql = "SELECT * FROM allmovies WHERE Rating IS NOT NULL ORDER BY Rating DESC";
+            $result = $conn->query($sql);
+            if ($result->num_rows > 0) {
+                while ($rows = $result->fetch_assoc()) {
+                    ?>
+                    <tr>
+                        <td><a href="../TableGerüst&Co/together.php" rel="noopener noreferrer"
+                               target="_blank"><?php echo $rows["Categorie"] ?></a></td>
+                        <td><?php echo $rows["Name"] ?></td>
+                        <td><?php echo $rows["Rating"] ?></td>
+                    </tr>
+                    <?php
+                }
+            }
+        }
+
+
+
+        if (isset($_POST["Length"])) {
+            $sql = "SELECT * FROM allmovies ORDER BY NAME ASC";
+            $result = $conn->query($sql);
+            if ($result->num_rows > 0) {
+                while ($rows = $result->fetch_assoc()) {
+                    $category = $rows["Categorie"];
+                    $name = $rows["Name"];
+                    $rating = $rows["Rating"];
+                    ?>
+                    <tr>
+                        <td><a href="../TableGerüst&Co/together.php" rel="noopener noreferrer"
+                               target="_blank"><?php echo $rows["Category"] ?></a></td>
+                        <td><?php echo $rows["Name"] ?></td>
+                        <td><?php echo $rows["Rating"] ?></td>
+                    </tr>
+                    <?php
+                }
+            }
+        } elseif (isset($_POST["Category"])) {
+            echo "<div >What<div";
+        }
+
+        ?>
+
+
+    </table>
+
+
+    <?php
+    // side column next
+    ?>
+
+    <!-- <button type="submit">Show Sidebar</button> -->
+    <?php
+    if (isset($_POST["filters"])) {
+        ?>
+        <div class="left">
+            <a class="red waves-effect waves-light btn"><i
+                        class="material-icons right">Extras </i></a>
+        </div>
+    <?php }
+    if (!isset($_POST["filters"])) {
+
+
+        ?>
+        <div class="left">
+            <a class="blue waves-effect waves-light btn"><i
+                        class="material-icons right">Extras </i></a>
+        </div>
+        <?php
     }
     ?>
-    <?php
-
-    $sql = "SELECT * FROM allmovies";
-    $result = $conn->query($sql);
-    if ($result->num_rows > 0){
-        while ($rows = $result->fetch_assoc()){
-            $category = $rows["Categorie"];
-            $name = $rows["Name"];
-            $rating = $rows["Rating"];
-            ?>
-                <tr>
-                    <td><a href="../TableGerüst&Co/together.php" rel="noopener noreferrer" target="_blank"><?php echo $rows["Categorie"] ?></a></td>
-                    <td><?php echo $rows["Name"] ?></td>
-                    <td><?php echo $rows["Rating"] ?></td>
-                </tr>
-            <?php } // creating the rows for Every movies Categore etc.?
-
-    }
-?>
-
-
-
-
-</table>
-<?php
-// side column next
-?>
-
-<!-- <button type="submit">Show Sidebar</button> -->
-
-<div class="left">
-    <a href="../TableGerüst&Co/together.php" target="_blank" rel="noopener noreferrer"><nav>GOTODAFILTER
-    </nav> </a>
-</div>
 </form>
 </body>
 </html>
@@ -88,4 +228,3 @@
 
 // First make the main site without sidebars, without php around it for a condition like the sidebars
 ?>
-

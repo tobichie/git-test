@@ -35,11 +35,11 @@ if (isset($_POST['register'])) {
                 $success = "yes";
                 echo "<p class = 'green center container'>Success: Account has been created";
             } else {
-                echo 'query error: ' . mysqli_error($conn);
+                echo 'query error: ' .  "mysqli_error($conn)";
             }
         } else {
             $UserExists = "Username exists already";
-            echo "<p class='red center container'>Error: . $UserExists</p>";
+            echo "<p class='red center container'>Error: $UserExists</p>";
         }
 
 

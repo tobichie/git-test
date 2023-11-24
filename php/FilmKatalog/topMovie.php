@@ -34,33 +34,35 @@
         function sureFunc(id){
             let sure = prompt('Are you sure you want to delete this?', 'Yes');
             if (sure === 'Yes') {
-                location.href = "together.php?delete=" + id;
+                location.href = "FilmAdminDashboard.php?delete=" + id;
             }
         }
     </script>
 </head>
 <body>
-<h1 class="center grey">Benutzer Liste</h1>
-<form action="together.php" method="post">
-    <table class="striped table">
+<h1 class="center grey">Movie List</h1>
+<form action="FilmAdminDashboard.php" method="post">
+    <table>
         <tr>
-            <th>id</th>
-            <th>User</th>
-            <th>Password</th>
+            <th>Index</th>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Rating</th>
+
             <th> <!-- show Edit and Delete buttons on press -->
-            <?php
-            // if (!isset($_POST["add"])){
-            //     echo "<th><button type='submit' name='add'>Add</button></th>";
-            // }
-            if (!isset($_POST["add"]) and !isset($_POST['edit'])){
-                echo "<button type='submit' name='add' class='btn blue-wave'>Add</button></th>";
-            }
-            // if (!isset($_POST["add"]) and !isset($_POST['edit'])){
-            //     echo "<button type='submit' name='copy'>Copy"
-            // }
+                <?php
+                // if (!isset($_POST["add"])){
+                //     echo "<th><button type='submit' name='add'>Add</button></th>";
+                // }
+                if (!isset($_POST["add"]) and !isset($_POST['edit'])){
+                    echo "<button type='submit' name='add'>Add</button></th>";
+                }
+                // if (!isset($_POST["add"]) and !isset($_POST['edit'])){
+                //     echo "<button type='submit' name='copy'>Copy"
+                // }
 
-            ?>
-
+                ?>
+            <th>Timestamp</th>
         </tr>
 
 
