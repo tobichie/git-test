@@ -40,7 +40,7 @@
     </script>
 </head>
 <body>
-<h1 class="center grey">Benutzer Liste</h1>
+<h1 class="center grey container blue-wave">Benutzer Liste</h1>
 <form action="together.php" method="post">
     <table class="striped table">
         <tr>
