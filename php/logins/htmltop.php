@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <script src="../JSnHTMLnPHP/JS/passcheck.js"></script>
     <style>
         ::placeholder {
             color: #2BBBAD;
@@ -33,7 +34,7 @@
         }
     </script>
 </head>
-<body class="valign-wrapper">
+<body>
     <div class="container input-field" name="casa">
         <div class="row">
             <form class="col s8 push-s2" action="<?php if (isset($inRegister)) {
@@ -47,8 +48,9 @@
                         echo "Login";
                     } ?></h2>
                 <div class="row">
+                    <div id="userOutput" class="red container"></div>
                     <div class="input-field col s12">
-                        <input name="username" value="<?php
+                        <input oninput="processUserID()" id="<?php if (isset($inRegister)){echo "usercheck";  } else {echo ""; }     ?>" name="username" value="<?php
                         if (isset($username)) {
                             echo htmlspecialchars($username);
                         } elseif (isset($userExists)) {
@@ -65,8 +67,9 @@
                 </div>
                 <div class="row">
                     <div class="input-field col s12">
+                        <div id="output" class="red container"></div>
                         <?php ?>
-                        <input name="password" value="<?php
+                        <input oninput="processPassID()" id="passcheck" name="password" value="<?php
                         if (isset($luhpass)) {
                             echo "<div class='center'>$luhpass</div>";
                         }
@@ -128,6 +131,16 @@
 
                         ?>
                     </div>
+                    <?php // if login failed 3 times show following button    ?>
+
+                    <?php if (!isset($inRegister)){ echo "<div><button class='btn blue-wave s4' name='toEmail'>Forgot Password</button></div>";     }
+                          if (isset($_POST["toEmail"])) {
+                              header("location: forgotPassword.php");
+                          }
+                    ?>
+
+
+
                 </div>
                 <div class="row">
                     <div class="center input-field col s12">

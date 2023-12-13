@@ -14,8 +14,6 @@ if ($conn->connect_error) {
 if (isset($_POST['register'])) {
     if (!preg_match('/^[a-zA-Z0-9\s]+$/', $_POST["username"])) {
         echo "<div class='container center red' name='error'>Username can only be letters and Numbers</div>";
-    } elseif (!preg_match('/^[a-zA-Z0-9\s]+$/', $_POST["password"])) {
-        echo "<div class='container center red' name='error'>Password can only be letters and Numbers</div>";
     } else {
         $password = htmlspecialchars($_POST["password"]);
         $username = htmlspecialchars($_POST["username"]);
@@ -23,7 +21,7 @@ if (isset($_POST['register'])) {
         // check if the username exists already
         $checkName = "SELECT Username FROM admincheck WHERE Username = '$username'";
         $checkNameResult = $conn->query($checkName);
-        if ($checkNameResult->num_rows > 0){
+        if ($checkNameResult->num_rows > 0) {
             $exists = "yes";
         }
 
@@ -35,7 +33,7 @@ if (isset($_POST['register'])) {
                 $success = "yes";
                 echo "<p class = 'green center container'>Success: Account has been created";
             } else {
-                echo 'query error: ' .  "mysqli_error($conn)";
+                echo 'query error: ' . "mysqli_error($conn)";
             }
         } else {
             $UserExists = "Username exists already";
