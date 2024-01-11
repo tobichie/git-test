@@ -37,22 +37,44 @@
             border-radius: 6px;
 
         }
+        .lul {
+            height: 100%;
+        }
     </style>
     <script>
-        $(document).ready(function (){
-            $("#showIt").click(function (){
-                $("#colu").load("another.php")
+        $(document).ready(function () {
+            $("#showIt").click(function () {
+                $("#colu").fadeIn(500, function () {
+                    $(this).load("another.php", function () {
+                        $(this).fadeIn(500);
+                    });
+                });
+            });
+
+            $("#colu").click(function () {
+                $("#colu").load("openedit.php");
+            });
+
+
+
+            $("#testBTN").click(function () {
+                $("#testLOAD").fadeIn(1500, function () {
+                    $(this).load("sha.php", function () {
+                        $(this).fadeOut(1500)
+                    })
+                })
             })
+
         });
 
-        $(document).ready(function () {
-            $("#colu").click(function () {
-                $("colu").load("openedit.php")
-            })
-        });
+
     </script>
 </head>
 <body>
+<button id="testBTN">AAAAA</button>
+<div id="testLOAD">
+</div>
+
 <div class="center">
     <div class="centreIt"></div>
     <div class="bot">
@@ -61,7 +83,7 @@
     </div>
     <div class="container">
         <header>Notes</header>
-        <div class="col colu" id="colu">
+        <div class="col colu lul" id="colu">
             <?php
 
             $conn = mysqli_connect("localhost", "root", "Minecraft1", "power");
